@@ -93,3 +93,4 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 
 	}
 	```
+7. Follow the steps 5-9 of the installation [instructions for Jetbrains Hub](https://www.jetbrains.com/hub/help/1.0/Installing-Hub-with-Zip-Distribution.html)
