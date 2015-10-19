@@ -18,7 +18,7 @@ Docker has to run. It supports many platforms like Ubuntu, Arch Linux, Mac OS X,
 1. Install docker. [It's not very hard.](http://docs.docker.io/en/latest/installation/)
 2. Run it! (Stop with CTRL-C, repeat at pleasure)
 
-  `docker run -t -i -p 127.0.0.1:8080:8080 dzwicker/docker-hub`
+  `docker run -t -i -p 8080:8080 dzwicker/docker-hub`
 
 
 
@@ -27,7 +27,11 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 ## Do it as service in ubuntu/debian
 1. Create directory to store data
   
-  `mkdir -p /var/lib/hub`
+  ``` bash
+  mkdir -p /var/lib/hub
+  mkdir -p /var/log/hub
+  mkdir -p /etc/hub
+  ```
 
 2. Permissions!
 
