@@ -35,7 +35,15 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
   
 3. Create container!
 
-  `docker create -t -i -p 127.0.0.1:8080:8080 -v /var/lib/hub:/var/lib/hub --name docker-hub dzwicker/docker-hub`
+  ```
+  docker create -t -i -p 127.0.0.1:8080:8080 \ 
+  	-v /var/lib/hub:/var/lib/hub \ 
+  	-v /var/log/hub:/var/log/hub \
+  	-v /etc/hub:/usr/local/hub/conf \
+  	-v /tmp:/tmp \
+  	--name docker-hub \
+  	dzwicker/docker-hub
+  ```
 
 4. Create upstart configuration `/etc/init/docker-hub.conf`
 
@@ -53,7 +61,13 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 
 
 	```
-	/var/log/docker-hub.log {
+	/var/log/hub/*.log
+	/var/log/hub/dashboard/*.log 
+	/var/log/hub/hub/*.log 
+	/var/log/hub/hub/logs/*.log 
+	/var/log/hub/internal/services/bundleProcess/*.log 
+	/var/log/hub/project-wizard/*.log 
+	 {
 	    rotate 7
 	    daily
 	    missingok
@@ -93,4 +107,6 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 
 	}
 	```
-7. Follow the steps 5-9 of the installation [instructions for Jetbrains Hub](https://www.jetbrains.com/hub/help/1.0/Installing-Hub-with-Zip-Distribution.html)
+7. Setup the Server
+	
+	Follow the steps 5-9 of the installation [instructions for Jetbrains Hub](https://www.jetbrains.com/hub/help/1.0/Installing-Hub-with-Zip-Distribution.html) using paths located under `/var/lib/hub/data`, `/var/lib/hub/backups`, `/var/log/hub`, `/tmp`.

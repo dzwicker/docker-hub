@@ -10,8 +10,10 @@ RUN \
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN \
+    mkdir -p /var/lib/hub && \
     groupadd --gid 2000 hub && \
-    useradd --system --uid 2000 --gid hub hub
+    useradd --system -d /var/lib/hub --uid 2000 --gid hub hub && \
+    chown -R hub:hub /var/lib/hub
 
 ######### upgrade system and install java certs ##
 RUN \
@@ -37,17 +39,16 @@ RUN \
     export HUB_BUILD=583 && \
     mkdir -p /usr/local/hub && \
     mkdir -p /var/lib/hub && \
+    cd /usr/local/hub && \
+    echo "$HUB_VERSION.$HUB_BUILD" > version.docker.image && \
     curl -L https://download.jetbrains.com/hub/${HUB_VERSION}/hub-ring-bundle-${HUB_VERSION}.${HUB_BUILD}.zip \
-        > /usr/local/hub/hub-ring-bundle-$HUB_VERSION.$HUB_BUILD.zip && \
-    mkdir -p /usr/local/hub/hub-ring-bundle-$HUB_VERSION.$HUB_BUILD && \
-    unzip /usr/local/hub/hub-ring-bundle-$HUB_VERSION.$HUB_BUILD.zip \
-        -d /usr/local/hub/hub-ring-bundle-$HUB_VERSION.$HUB_BUILD && \
-    ln -s /usr/local/hub/hub-ring-bundle-$HUB_VERSION.$HUB_BUILD /usr/local/hub/hub-ring-bundle && \
-    chown -R hub:hub /usr/local/hub && \
-    chown -R hub:hub /var/lib/hub
+        > hub-ring-bundle.zip && \
+    unzip hub-ring-bundle.zip && \
+    rm -f hub-ring-bundle.zip && \
+    chown -R hub:hub /usr/local/hub
 
 USER hub
-ENV HOME=/home/hub
+ENV HOME=/var/lib/hub
 EXPOSE 8080
 ENTRYPOINT ["/entry-point.sh"]
 CMD ["run"]
