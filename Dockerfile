@@ -13,7 +13,7 @@ COPY entry-point.sh /entry-point.sh
 
 RUN \
     export HUB_VERSION=1.0 && \
-    export HUB_BUILD=770 && \
+    export HUB_BUILD=809 && \
     mkdir -p /usr/local/hub && \
     mkdir -p /var/lib/hub && \
     cd /usr/local/hub && \
