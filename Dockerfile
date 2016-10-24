@@ -19,9 +19,12 @@ RUN \
     curl -L https://download.jetbrains.com/hub/${HUB_VERSION}/hub-ring-bundle-${HUB_VERSION}.${HUB_BUILD}.zip \
         > hub-ring-bundle.zip && \
     unzip hub-ring-bundle.zip && \
-    rm -f hub-ring-bundle.zip && \
     mv /usr/local/hub-ring-bundle-${HUB_VERSION}.${HUB_BUILD} /usr/local/hub && \
     echo "$HUB_VERSION.$HUB_BUILD" > /usr/local/hub/version.docker.image && \
+    rm -f hub-ring-bundle.zip && \
+    rm -rf /usr/local/hub/internal/java/linux-x64/man && \
+    rm -rf /usr/local/hub/internal/java/mac-x64 && \
+    rm -rf /usr/local/hub/internal/java/windows-amd64 && \
     chown -R hub:hub /usr/local/hub
 
 USER hub
