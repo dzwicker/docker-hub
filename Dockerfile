@@ -1,5 +1,5 @@
 FROM dzwicker/docker-ubuntu:latest
-MAINTAINER daniel.zwicker@in2experience.com
+MAINTAINER email@daniel-zwicker.de
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN \
@@ -12,16 +12,16 @@ RUN \
 COPY entry-point.sh /entry-point.sh
 
 RUN \
-    export HUB_VERSION=1.0 && \
-    export HUB_BUILD=809 && \
-    mkdir -p /usr/local/hub && \
+    export HUB_VERSION=2.5 && \
+    export HUB_BUILD=399 && \
     mkdir -p /var/lib/hub && \
-    cd /usr/local/hub && \
-    echo "$HUB_VERSION.$HUB_BUILD" > version.docker.image && \
+    cd /usr/local && \
     curl -L https://download.jetbrains.com/hub/${HUB_VERSION}/hub-ring-bundle-${HUB_VERSION}.${HUB_BUILD}.zip \
         > hub-ring-bundle.zip && \
     unzip hub-ring-bundle.zip && \
     rm -f hub-ring-bundle.zip && \
+    mv /usr/local/hub-ring-bundle-${HUB_VERSION}.${HUB_BUILD} /usr/local/hub && \
+    echo "$HUB_VERSION.$HUB_BUILD" > /usr/local/hub/version.docker.image && \
     chown -R hub:hub /usr/local/hub
 
 USER hub
