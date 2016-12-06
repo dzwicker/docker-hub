@@ -13,7 +13,7 @@ COPY entry-point.sh /entry-point.sh
 
 RUN \
     export HUB_VERSION=2.5 && \
-    export HUB_BUILD=399 && \
+    export HUB_BUILD=450 && \
     mkdir -p /var/lib/hub && \
     cd /usr/local && \
     curl -L https://download.jetbrains.com/hub/${HUB_VERSION}/hub-ring-bundle-${HUB_VERSION}.${HUB_BUILD}.zip \
